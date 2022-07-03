@@ -1,6 +1,7 @@
 .App {
   max-width: 1000px;
   margin: 0 auto;
+
 }
 .header {
   width: 100%;
@@ -22,7 +23,7 @@
   align-items: center;
   margin-top: 50px;
   flex-direction: column;
-
+  color: rgb(17, 29, 92);;
 }
 
 .welcome-button {
