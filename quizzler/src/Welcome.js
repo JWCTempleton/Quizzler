@@ -1,3 +1,8 @@
 export default function Welcome() {
-  return <h2>This is the welcome</h2>;
+  return (
+    <div className="welcome">
+      <h2>Welcome to the Quizzler App</h2>
+      <button className="welcome-button">Start Quiz</button>
+    </div>
+  );
 }

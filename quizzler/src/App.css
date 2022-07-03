@@ -15,3 +15,28 @@
   font-family: sans-serif;
   color: rgb(17, 29, 92);
 }
+
+
+.welcome {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  flex-direction: column;
+
+}
+
+.welcome-button {
+  width: auto;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #3f51ac;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.welcome-button:hover {
+  background-color: #2d41a7;
+}
