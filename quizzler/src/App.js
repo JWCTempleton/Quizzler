@@ -1,4 +1,5 @@
 import "./App.css";
+import Welcome from "./Welcome";
 
 function App() {
   return (
@@ -6,6 +7,7 @@ function App() {
       <header className="header">
         <h1 className="header-title">Quizzler</h1>
       </header>
+      <Welcome />
     </div>
   );
 }
