@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Welcome from "./Welcome";
+import Questions from "./Questions";
 
 function App() {
   const [startQuiz, setStartQuiz] = React.useState(false);
@@ -19,7 +20,6 @@ function App() {
       .then((data) => setQuizData(data));
   }, []);
 
-  console.log(quizData);
   return (
     <div className="App">
       <header className="header">
@@ -33,7 +33,11 @@ function App() {
           </button>
         </div>
       )}
-      {startQuiz && <h2>Start Quiz</h2>}
+      {startQuiz && (
+        <div>
+          <Questions quizData={quizData} />
+        </div>
+      )}
     </div>
   );
 }
