@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Welcome from "./Welcome";
 import Questions from "./Questions";
+import { nanoid } from "nanoid";
 
 function App() {
   const [startQuiz, setStartQuiz] = React.useState(false);
@@ -13,12 +14,31 @@ function App() {
   }
 
   React.useEffect(() => {
+    const questionsData = [];
     fetch(
       `https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`
     )
       .then((res) => res.json())
-      .then((data) => setQuizData(data));
+      .then((data) =>
+        data.results.map((quizQuestion) =>
+          questionsData.push({
+            id: nanoid(),
+            question: quizQuestion.question,
+            correctAnswer: {
+              correct: true,
+              answer: quizQuestion.correct_answer,
+            },
+            incorrectAnswers: {
+              correct: false,
+              answers: quizQuestion.incorrect_answers,
+            },
+          })
+        )
+      );
+    setQuizData(questionsData);
   }, []);
+
+  console.log(quizData);
 
   return (
     <div className="App">
@@ -35,7 +55,8 @@ function App() {
       )}
       {startQuiz && (
         <div>
-          <Questions quizData={quizData} />
+          {/* <Questions quizData={quizData} /> */}
+          Start
         </div>
       )}
     </div>
