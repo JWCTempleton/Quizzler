@@ -14,31 +14,52 @@ function App() {
   }
 
   React.useEffect(() => {
-    const questionsData = [];
+    const quizQuestions = [];
     fetch(
       `https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`
     )
       .then((res) => res.json())
       .then((data) =>
-        data.results.map((quizQuestion) =>
-          questionsData.push({
+        data.results.map((question) =>
+          quizQuestions.push({
             id: nanoid(),
-            question: quizQuestion.question,
-            correctAnswer: {
-              correct: true,
-              answer: quizQuestion.correct_answer,
-            },
-            incorrectAnswers: {
-              correct: false,
-              answers: quizQuestion.incorrect_answers,
-            },
+            question: question.question
+              .replace(/&quot;/g, '"')
+              .replace(/&#039;/g, "'"),
+            answers: [
+              ...question.incorrect_answers.map((incorrect) => ({
+                id: nanoid(),
+                answer: incorrect
+                  .replace(/&quot;/g, '"')
+                  .replace(/&#039;/g, "'"),
+                correct: false,
+                selected: false,
+              })),
+              {
+                id: nanoid(),
+                answer: question.correct_answer
+                  .replace(/&quot;/g, '"')
+                  .replace(/&#039;/g, "'"),
+                correct: true,
+                selected: true,
+              },
+            ],
           })
         )
       );
-    setQuizData(questionsData);
+    console.log(quizQuestions);
+    setQuizData(quizQuestions);
   }, []);
 
-  console.log(quizData);
+  // console.log(quizData);
+
+  const questionElements = quizData.map((each) => (
+    <Questions
+      key={each.id}
+      quizQuestion={each.question}
+      answers={each.answers}
+    />
+  ));
 
   return (
     <div className="App">
@@ -53,12 +74,7 @@ function App() {
           </button>
         </div>
       )}
-      {startQuiz && (
-        <div>
-          {/* <Questions quizData={quizData} /> */}
-          Start
-        </div>
-      )}
+      {startQuiz && <div>{questionElements}</div>}
     </div>
   );
 }
