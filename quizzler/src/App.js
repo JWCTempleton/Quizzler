@@ -33,7 +33,7 @@ function App() {
                   .replace(/&quot;/g, '"')
                   .replace(/&#039;/g, "'"),
                 correct: false,
-                selected: false,
+                isSelected: false,
               })),
               {
                 id: nanoid(),
@@ -41,7 +41,7 @@ function App() {
                   .replace(/&quot;/g, '"')
                   .replace(/&#039;/g, "'"),
                 correct: true,
-                selected: true,
+                isSelected: true,
               },
             ],
           })
