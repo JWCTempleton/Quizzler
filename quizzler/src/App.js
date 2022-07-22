@@ -31,7 +31,8 @@ function App() {
                 id: nanoid(),
                 answer: incorrect
                   .replace(/&quot;/g, '"')
-                  .replace(/&#039;/g, "'"),
+                  .replace(/&#039;/g, "'")
+                  .replace(/&ouml;/g, "Ö"),
                 correct: false,
                 isSelected: false,
               })),
@@ -41,23 +42,36 @@ function App() {
                   .replace(/&quot;/g, '"')
                   .replace(/&#039;/g, "'"),
                 correct: true,
-                isSelected: true,
+                isSelected: false,
               },
             ],
           })
         )
       );
-    console.log(quizQuestions);
     setQuizData(quizQuestions);
   }, []);
 
-  // console.log(quizData);
+  console.log(quizData);
+
+  function toggleSelected(id) {
+    setQuizData((oldData) =>
+      oldData.map((oldQuestion) => {
+        const newAnswerSelected = oldQuestion.answers.map((answer) => {
+          return answer.id === id
+            ? { ...answer, isSelected: !answer.isSelected }
+            : { ...answer, isSelected: false };
+        });
+        return { ...oldQuestion, answers: newAnswerSelected };
+      })
+    );
+  }
 
   const questionElements = quizData.map((each) => (
     <Questions
       key={each.id}
       quizQuestion={each.question}
       answers={each.answers}
+      toggleSelected={toggleSelected}
     />
   ));
 

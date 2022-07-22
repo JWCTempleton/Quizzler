@@ -3,8 +3,13 @@ export default function Questions(props) {
     const styles = {
       backgroundColor: answer.isSelected ? "#D6DBF5" : "transparent",
     };
+
     return (
-      <button style={styles} key={answer.id}>
+      <button
+        style={styles}
+        key={answer.id}
+        onClick={() => props.toggleSelected(answer.id)}
+      >
         {answer.answer}
       </button>
     );
