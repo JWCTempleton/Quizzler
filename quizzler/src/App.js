@@ -69,8 +69,19 @@ function App() {
   // }
 
   function toggleSelected(questionId, answerId) {
-    console.log(questionId);
-    console.log(answerId);
+    setQuizData((oldData) =>
+      oldData.map((oldQuestion) => {
+        if (questionId === oldQuestion.id) {
+          const newAnswerSelected = oldQuestion.answers.map((answer) => {
+            return answer.id === answerId
+              ? { ...answer, isSelected: !answer.isSelected }
+              : { ...answer, isSelected: false };
+          });
+          return { ...oldQuestion, answers: newAnswerSelected };
+        }
+        return { ...oldQuestion };
+      })
+    );
   }
 
   const questionElements = quizData.map((each) => (
