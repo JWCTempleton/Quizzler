@@ -53,23 +53,31 @@ function App() {
 
   console.log(quizData);
 
-  function toggleSelected(id) {
-    setQuizData((oldData) =>
-      oldData.map((oldQuestion) => {
-        const newAnswerSelected = oldQuestion.answers.map((answer) => {
-          return answer.id === id
-            ? { ...answer, isSelected: !answer.isSelected }
-            : { ...answer, isSelected: false };
-        });
-        return { ...oldQuestion, answers: newAnswerSelected };
-      })
-    );
+  //This works to change isSelected state but it only works for one question!
+  //I need to incorporate the question id itself
+  // function toggleSelected(id) {
+  //   setQuizData((oldData) =>
+  //     oldData.map((oldQuestion) => {
+  //       const newAnswerSelected = oldQuestion.answers.map((answer) => {
+  //         return answer.id === id
+  //           ? { ...answer, isSelected: !answer.isSelected }
+  //           : { ...answer, isSelected: false };
+  //       });
+  //       return { ...oldQuestion, answers: newAnswerSelected };
+  //     })
+  //   );
+  // }
+
+  function toggleSelected(questionId, answerId) {
+    console.log(questionId);
+    console.log(answerId);
   }
 
   const questionElements = quizData.map((each) => (
     <Questions
       key={each.id}
       quizQuestion={each.question}
+      questionId={each.id}
       answers={each.answers}
       toggleSelected={toggleSelected}
     />

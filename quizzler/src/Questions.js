@@ -8,7 +8,7 @@ export default function Questions(props) {
       <button
         style={styles}
         key={answer.id}
-        onClick={() => props.toggleSelected(answer.id)}
+        onClick={() => props.toggleSelected(props.questionId, answer.id)}
       >
         {answer.answer}
       </button>
