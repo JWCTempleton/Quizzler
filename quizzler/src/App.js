@@ -7,6 +7,8 @@ import { nanoid } from "nanoid";
 function App() {
   const [startQuiz, setStartQuiz] = React.useState(false);
 
+  const [loading, setLoading] = React.useState(false);
+
   const [quizData, setQuizData] = React.useState([]);
 
   function toggleStart() {
@@ -14,44 +16,88 @@ function App() {
   }
 
   React.useEffect(() => {
+    setLoading(true);
     const quizQuestions = [];
-    fetch(
-      `https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`
-    )
-      .then((res) => res.json())
-      .then((data) =>
-        data.results.map((question) =>
-          quizQuestions.push({
-            id: nanoid(),
-            question: question.question
-              .replace(/&quot;/g, '"')
-              .replace(/&#039;/g, "'"),
-            answers: [
-              ...question.incorrect_answers.map((incorrect) => ({
-                id: nanoid(),
-                answer: incorrect
-                  .replace(/&quot;/g, '"')
-                  .replace(/&#039;/g, "'")
-                  .replace(/&ouml;/g, "Ö"),
-                correct: false,
-                isSelected: false,
-              })),
-              {
-                id: nanoid(),
-                answer: question.correct_answer
-                  .replace(/&quot;/g, '"')
-                  .replace(/&#039;/g, "'"),
-                correct: true,
-                isSelected: false,
-              },
-            ],
-          })
-        )
-      );
-    setQuizData(quizQuestions);
-  }, []);
 
-  console.log(quizData);
+    async function getQuizQuestions() {
+      const res = await fetch(
+        `https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`
+      );
+      const data = await res.json();
+      data.results.map((question) =>
+        quizQuestions.push({
+          id: nanoid(),
+          question: question.question
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'"),
+          answers: [
+            ...question.incorrect_answers.map((incorrect) => ({
+              id: nanoid(),
+              answer: incorrect
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'")
+                .replace(/&ouml;/g, "Ö"),
+              correct: false,
+              isSelected: false,
+            })),
+            {
+              id: nanoid(),
+              answer: question.correct_answer
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'")
+                .replace(/&aring;/g, "å")
+                .replace(/&auml;/g, "ä")
+                .replace(/&ouml;/g, "ö"),
+              correct: true,
+              isSelected: false,
+            },
+          ],
+        })
+      );
+      setQuizData(quizQuestions);
+      setLoading(false);
+    }
+    getQuizQuestions();
+    // fetch(
+    //   `https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) =>
+    //     data.results.map((question) =>
+    //       quizQuestions.push({
+    //         id: nanoid(),
+    //         question: question.question
+    //           .replace(/&quot;/g, '"')
+    //           .replace(/&#039;/g, "'"),
+    //         answers: [
+    //           ...question.incorrect_answers.map((incorrect) => ({
+    //             id: nanoid(),
+    //             answer: incorrect
+    //               .replace(/&quot;/g, '"')
+    //               .replace(/&#039;/g, "'")
+    //               .replace(/&ouml;/g, "Ö"),
+    //             correct: false,
+    //             isSelected: false,
+    //           })),
+    //           {
+    //             id: nanoid(),
+    //             answer: question.correct_answer
+    //               .replace(/&quot;/g, '"')
+    //               .replace(/&#039;/g, "'")
+    //               .replace(/&aring;/g, "å")
+    //               .replace(/&auml;/g, "ä")
+    //               .replace(/&ouml;/g, "ö"),
+    //             correct: true,
+    //             isSelected: false,
+    //           },
+    //         ],
+    //       })
+    //     )
+    //   );
+    // setQuizData(quizQuestions);
+    // setLoading(false);
+    // console.log(quizQuestions);
+  }, []);
 
   //This works to change isSelected state but it only works for one question!
   //I need to incorporate the question id itself
@@ -99,13 +145,20 @@ function App() {
       <header className="header">
         <h1 className="header-title">Quizzler</h1>
       </header>
-      {!startQuiz && (
-        <div className="welcome">
-          <Welcome />
-          <button className="welcome-button" onClick={toggleStart}>
-            Start Quiz
-          </button>
+
+      {loading ? (
+        <div>
+          <p>Loading...</p>
         </div>
+      ) : (
+        !startQuiz && (
+          <div className="welcome">
+            <Welcome />
+            <button className="welcome-button" onClick={toggleStart}>
+              Start Quiz
+            </button>
+          </div>
+        )
       )}
       {startQuiz && <div>{questionElements}</div>}
     </div>
