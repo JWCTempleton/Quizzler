@@ -43,3 +43,32 @@
 .welcome-button:hover {
   background-color: #2d41a7;
 }
+
+.question {
+  margin-bottom: 42px;
+}
+
+.questionElement {
+  border: 1px solid rgb(17, 29, 92);
+  border-radius: 10px;
+  max-width: 85%;
+  margin: 40px auto;
+  padding: 30px 50px;
+  color: rgb(17, 29, 92);
+}
+
+.questionButton {
+  border: 1px solid #293264;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-right: 30px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: rgb(17, 29, 92);;
+
+}
+
+.answerSection {
+  display: grid;
+  grid-template: auto auto / 1fr 1fr;
+}

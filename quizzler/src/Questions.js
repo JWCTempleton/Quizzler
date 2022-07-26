@@ -15,6 +15,7 @@ export default function Questions(props) {
 
     return (
       <button
+        className="questionButton"
         style={styles}
         key={answer.id}
         onClick={() => props.toggleSelected(props.questionId, answer.id)}
@@ -24,9 +25,9 @@ export default function Questions(props) {
     );
   });
   return (
-    <div>
-      <h3>{props.quizQuestion}</h3>
-      <div>{answerElement}</div>
+    <div className="questionElement">
+      <h3 className="question">{props.quizQuestion}</h3>
+      <div className="answerSection">{answerElement}</div>
     </div>
   );
 }
