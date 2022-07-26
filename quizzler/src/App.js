@@ -11,8 +11,14 @@ function App() {
 
   const [quizData, setQuizData] = React.useState([]);
 
+  const [submitted, setSubmitted] = React.useState(false);
+
   function toggleStart() {
     setStartQuiz((prev) => !prev);
+  }
+
+  function toggleSubmit() {
+    setSubmitted((prev) => !prev);
   }
 
   React.useEffect(() => {
@@ -29,14 +35,19 @@ function App() {
           id: nanoid(),
           question: question.question
             .replace(/&quot;/g, '"')
-            .replace(/&#039;/g, "'"),
+            .replace(/&#039;/g, "'")
+            .replace(/&aring;/g, "å")
+            .replace(/&auml;/g, "ä")
+            .replace(/&ouml;/g, "ö"),
           answers: [
             ...question.incorrect_answers.map((incorrect) => ({
               id: nanoid(),
               answer: incorrect
                 .replace(/&quot;/g, '"')
                 .replace(/&#039;/g, "'")
-                .replace(/&ouml;/g, "Ö"),
+                .replace(/&aring;/g, "å")
+                .replace(/&auml;/g, "ä")
+                .replace(/&ouml;/g, "ö"),
               correct: false,
               isSelected: false,
             })),
@@ -137,6 +148,7 @@ function App() {
       questionId={each.id}
       answers={each.answers}
       toggleSelected={toggleSelected}
+      submitState={submitted}
     />
   ));
 
@@ -160,7 +172,14 @@ function App() {
           </div>
         )
       )}
-      {startQuiz && <div>{questionElements}</div>}
+      {startQuiz && (
+        <div>
+          {questionElements}
+          <div>
+            <button onClick={toggleSubmit}>Submit</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

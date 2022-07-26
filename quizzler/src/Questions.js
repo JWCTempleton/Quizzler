@@ -1,8 +1,17 @@
 export default function Questions(props) {
   const answerElement = props.answers.map((answer) => {
-    const styles = {
+    let styles = {
       backgroundColor: answer.isSelected ? "#D6DBF5" : "transparent",
     };
+
+    if (props.submitState) {
+      if (answer.isSelected && answer.correct) {
+        styles = { backgroundColor: "#94D7A2" };
+      }
+      if (answer.isSelected && !answer.correct) {
+        styles = { backgroundColor: "#F8BCBC" };
+      }
+    }
 
     return (
       <button
