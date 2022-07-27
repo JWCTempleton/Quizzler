@@ -152,6 +152,11 @@ function App() {
     />
   ));
 
+  let count = 0;
+  const testResults = quizData.map((each) =>
+    each.answers.map((answer) => answer.isSelected && answer.correct && count++)
+  );
+
   return (
     <div className="App">
       <header className="header">
@@ -175,6 +180,9 @@ function App() {
       {startQuiz && (
         <div className="quiz-body">
           {questionElements}
+          {submitted && (
+            <p className="results">You got {count} questions correct!</p>
+          )}
           <button className="submit-button" onClick={toggleSubmit}>
             Submit
           </button>

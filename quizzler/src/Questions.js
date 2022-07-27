@@ -11,6 +11,9 @@ export default function Questions(props) {
       if (answer.isSelected && !answer.correct) {
         styles = { backgroundColor: "#F8BCBC" };
       }
+      if (answer.correct) {
+        styles = { backgroundColor: "#94D7A2" };
+      }
     }
 
     return (
