@@ -173,11 +173,11 @@ function App() {
         )
       )}
       {startQuiz && (
-        <div>
+        <div className="quiz-body">
           {questionElements}
-          <div>
-            <button onClick={toggleSubmit}>Submit</button>
-          </div>
+          <button className="submit-button" onClick={toggleSubmit}>
+            Submit
+          </button>
         </div>
       )}
     </div>

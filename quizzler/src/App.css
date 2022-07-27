@@ -45,6 +45,11 @@
   background-color: #2d41a7;
 }
 
+.quiz-body {
+  display: flex;
+  flex-direction: column;
+}
+
 .question {
   margin-bottom: 42px;
   font-size: 24px;
@@ -52,12 +57,18 @@
 }
 
 .questionElement {
-  border: 1px solid rgb(17, 29, 92);
+  border: 3px solid rgb(17, 29, 92);
   border-radius: 10px;
-  max-width: 85%;
+  width: 85%;
   margin: 40px auto;
   padding: 30px 50px;
   color: rgb(17, 29, 92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 2.6rem;
 }
 
 .questionButton {
@@ -70,10 +81,22 @@
   color: rgb(17, 29, 92);
   font-size: 16px;
   cursor: pointer;
-
+  min-width: 130px;
 }
 
 .answerSection {
   display: grid;
   grid-template: auto auto / 1fr 1fr;
+}
+
+.submit-button {
+  width: auto;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #3f51ac;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 20px auto;
 }
