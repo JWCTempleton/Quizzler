@@ -13,12 +13,22 @@ function App() {
 
   const [submitted, setSubmitted] = React.useState(false);
 
+  const [newGame, setNewGame] = React.useState(false);
+
   function toggleStart() {
     setStartQuiz((prev) => !prev);
   }
 
   function toggleSubmit() {
     setSubmitted((prev) => !prev);
+  }
+
+  function toggleNewGame() {
+    setStartQuiz(false);
+    setQuizData([]);
+    setLoading(false);
+    setSubmitted(false);
+    setNewGame((prev) => !prev);
   }
 
   React.useEffect(() => {
@@ -108,7 +118,7 @@ function App() {
     // setQuizData(quizQuestions);
     // setLoading(false);
     // console.log(quizQuestions);
-  }, []);
+  }, [newGame]);
 
   //This works to change isSelected state but it only works for one question!
   //I need to incorporate the question id itself
@@ -188,7 +198,11 @@ function App() {
               Submit Quiz
             </button>
           )}
-          {submitted && <button className="submit-button">New Game</button>}
+          {submitted && (
+            <button className="submit-button" onClick={toggleNewGame}>
+              New Game
+            </button>
+          )}
         </div>
       )}
     </div>
