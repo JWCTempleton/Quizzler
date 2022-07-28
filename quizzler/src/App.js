@@ -163,7 +163,7 @@ function App() {
   ));
 
   let count = 0;
-  const testResults = quizData.map((each) =>
+  quizData.map((each) =>
     each.answers.map((answer) => answer.isSelected && answer.correct && count++)
   );
 
@@ -191,7 +191,9 @@ function App() {
         <div className="quiz-body">
           {questionElements}
           {submitted && (
-            <p className="results">You got {count} questions correct!</p>
+            <p className="results">
+              You got {count} out of {quizData.length} questions correct!
+            </p>
           )}
           {!submitted && (
             <button className="submit-button" onClick={toggleSubmit}>
