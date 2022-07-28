@@ -183,9 +183,12 @@ function App() {
           {submitted && (
             <p className="results">You got {count} questions correct!</p>
           )}
-          <button className="submit-button" onClick={toggleSubmit}>
-            Submit
-          </button>
+          {!submitted && (
+            <button className="submit-button" onClick={toggleSubmit}>
+              Submit Quiz
+            </button>
+          )}
+          {submitted && <button className="submit-button">New Game</button>}
         </div>
       )}
     </div>

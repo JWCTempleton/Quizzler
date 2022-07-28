@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   font-family: sans-serif;
+  padding-bottom: 80px;
 }
 .header {
   width: 100%;
@@ -101,6 +102,7 @@
   font-weight: 600;
   font-size: 18px;
   margin: 20px auto;
+  cursor: pointer;
 }
 
 .results {
