@@ -3,11 +3,13 @@ import "./App.css";
 import Welcome from "./Welcome";
 import Questions from "./Questions";
 import { nanoid } from "nanoid";
+import arrayShuffle from "array-shuffle";
 
 function App() {
+  // STATE
   const [startQuiz, setStartQuiz] = React.useState(false);
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const [quizData, setQuizData] = React.useState([]);
 
@@ -15,6 +17,7 @@ function App() {
 
   const [newGame, setNewGame] = React.useState(false);
 
+  // FUNCTIONS
   function toggleStart() {
     setStartQuiz((prev) => !prev);
   }
@@ -31,8 +34,23 @@ function App() {
     setNewGame((prev) => !prev);
   }
 
+  function toggleSelected(questionId, answerId) {
+    setQuizData((oldData) =>
+      oldData.map((oldQuestion) => {
+        if (questionId === oldQuestion.id) {
+          const newAnswerSelected = oldQuestion.answers.map((answer) => {
+            return answer.id === answerId
+              ? { ...answer, isSelected: !answer.isSelected }
+              : { ...answer, isSelected: false };
+          });
+          return { ...oldQuestion, answers: newAnswerSelected };
+        }
+        return { ...oldQuestion };
+      })
+    );
+  }
+
   React.useEffect(() => {
-    setLoading(true);
     const quizQuestions = [];
 
     async function getQuizQuestions() {
@@ -49,7 +67,7 @@ function App() {
             .replace(/&aring;/g, "å")
             .replace(/&auml;/g, "ä")
             .replace(/&ouml;/g, "ö"),
-          answers: [
+          answers: arrayShuffle([
             ...question.incorrect_answers.map((incorrect) => ({
               id: nanoid(),
               answer: incorrect
@@ -72,7 +90,7 @@ function App() {
               correct: true,
               isSelected: false,
             },
-          ],
+          ]),
         })
       );
       setQuizData(quizQuestions);
@@ -135,32 +153,18 @@ function App() {
   //   );
   // }
 
-  function toggleSelected(questionId, answerId) {
-    setQuizData((oldData) =>
-      oldData.map((oldQuestion) => {
-        if (questionId === oldQuestion.id) {
-          const newAnswerSelected = oldQuestion.answers.map((answer) => {
-            return answer.id === answerId
-              ? { ...answer, isSelected: !answer.isSelected }
-              : { ...answer, isSelected: false };
-          });
-          return { ...oldQuestion, answers: newAnswerSelected };
-        }
-        return { ...oldQuestion };
-      })
+  const questionElements = quizData.map((each) => {
+    return (
+      <Questions
+        key={each.id}
+        quizQuestion={each.question}
+        questionId={each.id}
+        answers={each.answers}
+        toggleSelected={toggleSelected}
+        submitState={submitted}
+      />
     );
-  }
-
-  const questionElements = quizData.map((each) => (
-    <Questions
-      key={each.id}
-      quizQuestion={each.question}
-      questionId={each.id}
-      answers={each.answers}
-      toggleSelected={toggleSelected}
-      submitState={submitted}
-    />
-  ));
+  });
 
   let count = 0;
   quizData.map((each) =>
