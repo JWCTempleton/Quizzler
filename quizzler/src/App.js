@@ -17,6 +17,8 @@ function App() {
 
   const [newGame, setNewGame] = React.useState(false);
 
+  const [darkMode, setDarkMode] = React.useState(true);
+
   // FUNCTIONS
   function toggleStart() {
     setStartQuiz((prev) => !prev);
@@ -24,6 +26,10 @@ function App() {
 
   function toggleSubmit() {
     setSubmitted((prev) => !prev);
+  }
+
+  function toggleDarkMode() {
+    setDarkMode((prevMode) => !prevMode);
   }
 
   function toggleNewGame() {
@@ -66,7 +72,9 @@ function App() {
             .replace(/&#039;/g, "'")
             .replace(/&aring;/g, "å")
             .replace(/&auml;/g, "ä")
-            .replace(/&ouml;/g, "ö"),
+            .replace(/&ouml;/g, "ö")
+            .replace(/&ldquo;/g, '"')
+            .replace(/&rdquo;/g, '"'),
           answers: arrayShuffle([
             ...question.incorrect_answers.map((incorrect) => ({
               id: nanoid(),
@@ -75,7 +83,9 @@ function App() {
                 .replace(/&#039;/g, "'")
                 .replace(/&aring;/g, "å")
                 .replace(/&auml;/g, "ä")
-                .replace(/&ouml;/g, "ö"),
+                .replace(/&ouml;/g, "ö")
+                .replace(/&ldquo;/g, '"')
+                .replace(/&rdquo;/g, '"'),
               correct: false,
               isSelected: false,
             })),

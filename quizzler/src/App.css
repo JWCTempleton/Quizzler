@@ -1,3 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: #eee;
+  box-sizing: border-box;
+  padding: 3rem;
+}
+
 .App {
   max-width: 1000px;
   margin: 0 auto;
@@ -7,6 +23,7 @@
   align-items: center;
   font-family: sans-serif;
   padding-bottom: 80px;
+  
 }
 .header {
   width: 100%;
@@ -16,6 +33,7 @@
 }
 
 .header-title {
+  font-size: 3rem;
   margin-left: 20px;
   font-weight: 700;
   font-family: sans-serif;
