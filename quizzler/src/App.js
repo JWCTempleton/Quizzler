@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import Welcome from "./Welcome";
+import NavBar from "./components/NavBar";
 import Questions from "./Questions";
 import { nanoid } from "nanoid";
 import arrayShuffle from "array-shuffle";
@@ -172,6 +173,7 @@ function App() {
         answers={each.answers}
         toggleSelected={toggleSelected}
         submitState={submitted}
+        darkMode={darkMode}
       />
     );
   });
@@ -183,10 +185,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="header">
-        <h1 className="header-title">Quizzler</h1>
-      </header>
-
+      <NavBar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       {loading ? (
         <div>
           <p>Loading...</p>
@@ -194,15 +193,12 @@ function App() {
       ) : (
         !startQuiz && (
           <div className="welcome">
-            <Welcome />
-            <button className="welcome-button" onClick={toggleStart}>
-              Start Quiz
-            </button>
+            <Welcome darkMode={darkMode} toggleStart={toggleStart} />
           </div>
         )
       )}
       {startQuiz && (
-        <div className="quiz-body">
+        <div className={darkMode ? "quiz-body-dark" : "quiz-body"}>
           {questionElements}
           {submitted && (
             <p className="results">
